@@ -75,8 +75,9 @@ async function getPostsByCategoryId(categoryId: string) {
   return postsWithAuthors as Post[];
 }
 
-export default async function CategoryPage({ params }: { params: { slug: string } }) {
-  const category = await getCategoryBySlug(params.slug)
+export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const category = await getCategoryBySlug(slug)
 
   if (!category) {
     notFound()
