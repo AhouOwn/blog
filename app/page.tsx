@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { BlogPostCard } from "@/components/blog-post-card";
-import { getSupabaseClient } from "@/lib/supabase/client";
 import { createClient } from "@/lib/supabase/server"
 import { Post, UserProfiles } from "@/types";
 

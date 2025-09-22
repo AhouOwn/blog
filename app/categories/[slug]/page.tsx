@@ -1,7 +1,7 @@
 import { BlogPostCard } from "@/components/blog-post-card";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
-import { Category, Post, UserProfiles } from "@/types";
+import { Category, Post } from "@/types";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";

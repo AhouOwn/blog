@@ -10,7 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import type { Category, PostProps } from "@/types"
+import type { Category } from "@/types"
 import { useAuth } from "@/components/auth-provider";
 import { useRouter } from "next/navigation";
 import { getSupabaseClient } from "@/lib/supabase/client";

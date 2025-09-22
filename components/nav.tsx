@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { Search, Menu, Sun, SunMoon } from "lucide-react"
+import { useState } from "react"
+import { Search, Menu } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -18,8 +18,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useAuth } from "@/components/auth-provider"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes"
-import { ThemeSwitcher } from "@/components/theme-switcher"
+// import { ThemeSwitcher } from "@/components/theme-switcher"
 import ThemeModeButton from "@/components/theme-mode-button"
 
 
@@ -29,12 +28,6 @@ export function Nav() {
 
   const activePath = usePathname()
   console.log(activePath, 'activePath==')
-
-  const { theme, setTheme } = useTheme()
-
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light')
-  }
 
   return (
     <header className="border-b">
@@ -97,14 +90,6 @@ export function Nav() {
           )}
           {/* <ThemeSwitcher /> */}
           <ThemeModeButton />
-
-          {/* {
-            theme === 'dark' ? (
-              <SunMoon className="ml-2 cursor-pointer" onClick={toggleTheme} />
-            ) : (
-              <Sun className="ml-2 cursor-pointer" onClick={toggleTheme} />
-            )
-          } */}
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
