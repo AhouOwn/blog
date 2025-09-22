@@ -56,7 +56,7 @@ export function RichTextEditor({
     immediatelyRender: false,
     extensions: [
       StarterKit.configure({
-        codeBlock: true,
+        codeBlock: false,
       }),
       Heading.configure({
         levels: [1, 2, 3],

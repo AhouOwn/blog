@@ -14,7 +14,7 @@ async function getPost() {
     .eq("published", true)
     .eq("is_public", true)
     .order("created_at", { ascending: false })
-    .limit(6) as { data: Post[]; error: any };
+    .limit(6) as { data: Post[]; error: Error | null };
 
   if (error) {
     console.error("Error fetching posts", error);
@@ -26,7 +26,7 @@ async function getPost() {
 
   // 获取所有作者的用户资料
   const authorIds = [...new Set(posts.map((post) => post.author_id))]
-  const { data: profiles, error: profileError } = await supabase.from("user_profiles").select("*").in("id", authorIds) as { data: UserProfiles[]; error: any };
+  const { data: profiles, error: profileError } = await supabase.from("user_profiles").select("*").in("id", authorIds) as { data: UserProfiles[]; error: Error | null };
 
   if (profileError) {
     console.error("Error fetching user profiles", profileError);

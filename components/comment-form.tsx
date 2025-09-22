@@ -46,7 +46,8 @@ export function CommentForm({ postId, onCommentAdded }: CommentFormProps) {
     setIsSubmitting(true)
 
     try {
-      const { data, error } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (supabase as any)
         .from("comments")
         .insert([
           {
@@ -78,10 +79,11 @@ export function CommentForm({ postId, onCommentAdded }: CommentFormProps) {
 
       setContent("")
       onCommentAdded(newComment)
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "发生了未知错误，请稍后再试";
       toast({
         title: "评论发布失败",
-        description: error.message || "发生了未知错误，请稍后再试",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {

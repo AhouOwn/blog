@@ -35,16 +35,18 @@ export function CommentsSection({ postId }: CommentsSectionProps) {
         }
 
         // 转换数据结构以匹配我们的类型
-        const formattedComments = data.map((comment) => ({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const formattedComments = data.map((comment: any) => ({
           ...comment,
           user: comment.user_profiles,
         }))
 
         setComments(formattedComments)
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : "发生了未知错误，请稍后再试";
         toast({
           title: "获取评论失败",
-          description: error.message || "发生了未知错误，请稍后再试",
+          description: errorMessage,
           variant: "destructive",
         })
       } finally {
@@ -53,7 +55,7 @@ export function CommentsSection({ postId }: CommentsSectionProps) {
     }
 
     fetchComments()
-  }, [postId, toast])
+  }, [postId, toast, supabase])
 
   const handleCommentAdded = (newComment: Comment) => {
     setComments([newComment, ...comments])

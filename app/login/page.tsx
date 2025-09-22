@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -16,7 +16,7 @@ import { Github } from "lucide-react"
 
 
 
-export default function Login() {
+function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -59,7 +59,7 @@ export default function Login() {
       })
 
       router.push("/dashboard")
-    } catch (error) {
+    } catch {
       toast({
         title: "登录失败",
         description: "发生了未知错误，请稍后再试",
@@ -83,7 +83,7 @@ export default function Login() {
           variant: "destructive",
         })
       }
-    } catch (error) {
+    } catch {
       toast({
         title: "GitHub 登录失败",
         description: "发生了未知错误，请稍后再试",
@@ -176,5 +176,13 @@ export default function Login() {
         </CardFooter>
       </Card>
     </div>
+  )
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   )
 }

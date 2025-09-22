@@ -43,10 +43,11 @@ export default function CreateBlogPost() {
         }
 
         setCategories(data);
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : '发生了未知错误，请稍后再试';
         toast({
           title: "获取分类失败",
-          description: error.message || '发生了未知错误，请稍后再试',
+          description: errorMessage,
           variant: "destructive",
         });
       } finally {
@@ -55,7 +56,7 @@ export default function CreateBlogPost() {
     };
 
     fetchCategories()
-  }, [toast]);
+  }, [toast, supabase]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,19 +102,20 @@ export default function CreateBlogPost() {
         Date.now().toString().slice(-6)
 
       // 创建文章
-      const { data, error } = await supabase
+      const postData = {
+        title,
+        content,
+        excerpt: excerpt || null,
+        author_id: user.id,
+        published,
+        slug,
+        is_public: visibility === "public",
+      };
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (supabase as any)
         .from("posts")
-        .insert([
-          {
-            title,
-            content,
-            excerpt: excerpt || null,
-            author_id: user.id,
-            published,
-            slug,
-            is_public: visibility === "public",
-          },
-        ])
+        .insert(postData)
         .select()
 
       if (error) {
@@ -129,7 +131,8 @@ export default function CreateBlogPost() {
           category_id: categoryId,
         }))
 
-        const { error: relationError } = await supabase.from("post_categories").insert(categoryRelations)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { error: relationError } = await (supabase as any).from("post_categories").insert(categoryRelations)
 
         if (relationError) {
           throw relationError
@@ -147,10 +150,11 @@ export default function CreateBlogPost() {
       } else {
         router.push("/dashboard")
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "发生了未知错误，请稍后再试";
       toast({
         title: "创建失败",
-        description: error.message || "发生了未知错误，请稍后再试",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {

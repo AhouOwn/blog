@@ -58,7 +58,7 @@ export default function Register() {
       })
 
       router.push("/login")
-    } catch (error) {
+    } catch {
       toast({
         title: "注册失败",
         description: "发生了未知错误，请稍后再试",
@@ -82,7 +82,7 @@ export default function Register() {
           variant: "destructive",
         })
       }
-    } catch (error) {
+    } catch {
       toast({
         title: "GitHub 登录失败",
         description: "发生了未知错误，请稍后再试",
